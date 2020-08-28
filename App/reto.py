@@ -82,7 +82,7 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-def ranking_de peliculas(lst,rank,parameter,orden):
+def ranking_de_peliculas(lst,rank,parameter,orden):
     t1_start = process_time():
     tempo=lt.newList() #list donde se almacena la lista desordenada con puntuaciones y nombres
     final=[] #list donde se almacena la lista ordenada de nombresP
