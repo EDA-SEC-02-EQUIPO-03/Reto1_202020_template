@@ -78,10 +78,11 @@ def loadCSVFile (file, cmpfunction):
 
 
 def loadMovies ():
-    lst = loadCSVFile("theMoviesdb/movies-small.csv",compareRecordIds) 
+    lst = loadCSVFile("theMoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+<<<<<<< HEAD
 def entender_un_genero(lst, genres):
     final=lt.newList()
     promedio=0
@@ -93,6 +94,13 @@ def entender_un_genero(lst, genres):
     tamaño=lt.size(final)
     print("Del genero "+genres+" se obtuvieron "+tamaño+" con votacion promedio de "+round(promedio/tamaño,2)+": \n"+final)
     
+=======
+def loadCast():
+    lst = loadCSVFile("theMoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
+    print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
+    return lst
+
+>>>>>>> 9b62deb8667f9046dbb34327f48e866691740971
 def main():
     """
     Método principal del programa, se encarga de manejar todos los metodos adicionales creados
@@ -109,7 +117,9 @@ def main():
         if len(inputs)>0:
 
             if int(inputs[0])==1: #opcion 1
+                'Cargando datos'
                 lstmovies = loadMovies()
+                lstcast = loadCast()
 
             elif int(inputs[0])==2: #opcion 2
                 pass
