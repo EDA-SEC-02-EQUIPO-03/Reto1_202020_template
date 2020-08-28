@@ -78,10 +78,14 @@ def loadCSVFile (file, cmpfunction):
 
 
 def loadMovies ():
-    lst = loadCSVFile("theMoviesdb/movies-small.csv",compareRecordIds) 
+    lst = loadCSVFile("theMoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def loadCast():
+    lst = loadCSVFile("theMoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
+    print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
+    return lst
 
 def main():
     """
@@ -99,7 +103,9 @@ def main():
         if len(inputs)>0:
 
             if int(inputs[0])==1: #opcion 1
+                'Cargando datos'
                 lstmovies = loadMovies()
+                lstcast = loadCast()
 
             elif int(inputs[0])==2: #opcion 2
                 pass
