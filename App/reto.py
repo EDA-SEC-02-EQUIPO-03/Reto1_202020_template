@@ -82,8 +82,32 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-<<<<<<< HEAD
+def ranking_de peliculas(lst,rank,parameter,orden):
+    t1_start = process_time():
+    tempo=lt.newList() #list donde se almacena la lista desordenada con puntuaciones y nombres
+    final=[] #list donde se almacena la lista ordenada de nombresP
+    p='vote_average' #criterio de de puntuacion
+    o=less #sentido de la lista
+    d='WORST ' #prefijo para el print
+    if orden.lower() == 'ascendente': #definir orden
+        o=greater
+        d='BEST'
+    if parameter.lower() == 'count': #definir criterio
+        p='vote_count'
+    tempo=lst.copy()
+
+    #ins.insertionSort(tempo,o,p)
+    #sel.selectionSort(tempo,o,p)
+    she.shellSort(tempo,o,p)
+    for j in range(1,rank):
+        final.append(lt.getElement(tempo,j))
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+    print('Top ',rank,' ',d,'',parameter,': \n',final) #impresion final de los datos con la lista, el largo de la lista y los parametros de orden
+  
+
 def entender_un_genero(lst, genres):
+    t1_start = process_time():
     final=lt.newList()
     promedio=0
     tamaño=0
@@ -92,15 +116,17 @@ def entender_un_genero(lst, genres):
             lt.addLast(final,lt.getElement(lst, i))
             promedio+=lt.getElement(lst,i)["vote_count"]
     tamaño=lt.size(final)
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
     print("Del genero "+genres+" se obtuvieron "+tamaño+" con votacion promedio de "+round(promedio/tamaño,2)+": \n"+final)
     
-=======
+
 def loadCast():
     lst = loadCSVFile("theMoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
->>>>>>> 9b62deb8667f9046dbb34327f48e866691740971
+
 def main():
     """
     Método principal del programa, se encarga de manejar todos los metodos adicionales creados
@@ -122,6 +148,10 @@ def main():
                 lstcast = loadCast()
 
             elif int(inputs[0])==2: #opcion 2
+                if lstmovies==None or lstmovies['size']==0:
+                    print("la lista esta vacia")
+                else:
+                    Ranking_de_peliculas(lstmovies,10,"vote_count","ascendente")
                 pass
 
             elif int(inputs[0])==3: #opcion 3
