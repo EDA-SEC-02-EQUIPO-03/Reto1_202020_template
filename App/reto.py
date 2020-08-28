@@ -82,7 +82,17 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-
+def entender_un_genero(lst, genres):
+    final=lt.newList()
+    promedio=0
+    tamaño=0
+    for i in lt.size(lst):
+        if lt.getElement(lst, i)["genre"] == genres:
+            lt.addLast(final,lt.getElement(lst, i))
+            promedio+=lt.getElement(lst,i)["vote_count"]
+    tamaño=lt.size(final)
+    print("Del genero "+genres+" se obtuvieron "+tamaño+" con votacion promedio de "+round(promedio/tamaño,2)+": \n"+final)
+    
 def main():
     """
     Método principal del programa, se encarga de manejar todos los metodos adicionales creados
@@ -111,6 +121,10 @@ def main():
                 pass
 
             elif int(inputs[0])==3: #opcion 5
+                if lstmovies==None or lstmovies['size']==0:
+                    print("la lista esta vacia")
+                else:
+                    Entender_un_genero(lstmovies,"Drama")
                 pass
 
             elif int(inputs[0])==4: #opcion 6
