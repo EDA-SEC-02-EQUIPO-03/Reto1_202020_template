@@ -121,6 +121,28 @@ def entender_un_genero(lst, genres):
     print("Del genero "+genres+" se obtuvieron "+tamaño+" con votacion promedio de "+round(promedio/tamaño,2)+": \n"+final)
     
 
+def conocer_a un_director(criteria,lista1,lista2):
+    
+    t1_start = process_time()
+    lstpeli=[]
+    sum_vote=0
+    cant_vote=0
+    for i in range(1,lt.size(lista1)+1):
+                    valor1=lt.getElement(lista1,i)
+                    valor2=lt.getElement(lista2,i)
+                    n=valor2['director_name']
+                    if criteria==n:
+                        pelicula=valor1["original_title"]
+                        lstpeli.append(pelicula)
+                        vote=valor1["vote_average"]
+                        sum_vote+=float(vote)
+                        cant_vote+=1     
+    num_pelis=len(lstpeli)
+    prom= sum_vote/cant_vote
+    t1_stop = process_time() 
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+    return [lstpeli,num_pelis,prom]
+
 def loadCast():
     lst = loadCSVFile("theMoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
