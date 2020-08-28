@@ -87,6 +87,12 @@ def loadCast():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def conocerActor(lst1, lst2, actor):
+    lst=lt.newList('arraylist')
+    
+
+    return None 
+
 def main():
     """
     Método principal del programa, se encarga de manejar todos los metodos adicionales creados
