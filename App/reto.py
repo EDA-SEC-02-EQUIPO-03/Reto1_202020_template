@@ -82,6 +82,7 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+    tempo=lt.newList() #list donde se almacena la lista desordenada con puntuaciones y nombres
 def loadCast():
     lst = loadCSVFile("theMoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
