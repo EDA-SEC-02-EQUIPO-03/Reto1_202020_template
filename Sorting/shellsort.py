@@ -33,7 +33,7 @@ Se utiliza la secuencia de incrementos 3x+1: 1, 4, 13, 40, 121, 364, 1093, .....
 Sedgewick: 1,5,19,41,109,209,929,2161,...
 """
 
-def shellSort(lst, function,condition='id'):
+def shellSort(lst, function,condition):
     n = lt.size(lst)
     h = 1
     while h < n/3:          # Se calcula el tamaño del primer gap. La lista se h-ordena con este tamaño

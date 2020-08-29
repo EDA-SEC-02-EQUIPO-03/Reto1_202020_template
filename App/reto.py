@@ -32,9 +32,6 @@ import csv
 
 from ADT import list as lt
 from DataStructures import listiterator as it
-from Sorting import insertionsort as ins
-from Sorting import selectionsort as sel
-from Sorting import shellsort as she
 from time import process_time 
 
 
@@ -129,9 +126,9 @@ def ranking_de_genero(lst,rank,parameter,orden,genero):
         d='BEST'
     if parameter.lower() == 'votos contados': #definir criterio
         p='vote_count'   
-    #ins.insertionSort(tempo,o,p)
-    #sel.selectionSort(tempo,o,p)
-    she.shellSort(lst,o,p)
+    #lt.insertionSort(tempo,o,p)
+    #lt.selectionSort(tempo,o,p)
+    lt.shellsort(lst,o,p)
     j=0
     while j<rank:
             g=lt.getElement(lst,j)['genres']
