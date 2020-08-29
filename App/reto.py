@@ -32,8 +32,9 @@ import csv
 
 from ADT import list as lt
 from DataStructures import listiterator as it
-from DataStructures import liststructure as lt
-
+from Sorting import insertionsort as ins
+from Sorting import selectionsort as sel
+from Sorting import shellsort as she
 from time import process_time 
 
 
@@ -48,10 +49,18 @@ def printMenu():
     print("3- Conocer un director")
     print("4- Conocer un actor")
     print("5- Entender un genero")
-    print("6- Crear ranking")
+    print("6- Crear ranking del género")
     print("0- Salir")
 
+def less(element1, element2,condition):
+    if float(element1[condition]) < float(element2[condition]):
+        return True
+    return False
 
+def greater(element1, element2,condition):
+    if float(element1[condition]) > float(element2[condition]):
+        return True
+    return False
 
 
 def compareRecordIds (recordA, recordB):
@@ -82,12 +91,115 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def ranking_de_peliculas(lst,rank,parameter,orden):
+    t1_start = process_time()
     tempo=lt.newList() #list donde se almacena la lista desordenada con puntuaciones y nombres
+    final=[] #list donde se almacena la lista ordenada de nombresP
+    p='vote_average' #criterio de de puntuacion
+    o=less #sentido de la lista
+    d='WORST ' #prefijo para el print
+    if orden.lower() == 'ascendente': #definir orden
+        o=greater
+        d='BEST'
+    if parameter.lower() == 'count': #definir criterio
+        p='vote_count'
+    tempo=lst.copy()
+
+    #ins.insertionSort(tempo,o,p)
+    #sel.selectionSort(tempo,o,p)
+    she.shellSort(tempo,o,p)
+    for j in range(1,rank):
+        final.append(lt.getElement(tempo,j))
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+    print('Top ',rank,' ',d,'',parameter,': \n',final) #impresion final de los datos con la lista, el largo de la lista y los parametros de orden
+  
+def ranking_de_genero(lst,rank,parameter,orden,genero):
+    t1_start = process_time()
+    average=0
+    count=0
+    n=0
+    final=[] #list donde se almacena la lista ordenada de nombresP
+     #criterio de de puntuacion
+    o=less #sentido de la lista
+    d='WORST '
+    p='vote_average' #prefijo para el print
+    if orden.lower() == 'ascendente': #definir orden
+        o=greater
+        d='BEST'
+    if parameter.lower() == 'votos contados': #definir criterio
+        p='vote_count'   
+    #ins.insertionSort(tempo,o,p)
+    #sel.selectionSort(tempo,o,p)
+    she.shellSort(lst,o,p)
+    j=0
+    while j<rank:
+            g=lt.getElement(lst,j)['genres']
+            if g==genero:
+                average+= float(lt.getElement(lst,j)["vote_average"])
+                n+=1
+                count+= int(lt.getElement(lst,j)["vote_count"])
+                final.append(lt.getElement(lst,j)['original_title'])
+            else:
+                rank+=1
+            j+=1
+    if n!=0:
+        prom_vave=round(average/n,2)
+        prom_vcount=count//n
+    else:
+        prom_vave=0
+        prom_vcount=0
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+    return [final,prom_vave,prom_vcount,d]
+    
+    
+
+def entender_un_genero(lst, genres):
+    t1_start = process_time()
+    final=lt.newList()
+    promedio=0
+    tamaño=0
+    for i in lt.size(lst):
+        if lt.getElement(lst, i)["genres"] == genres:
+            lt.addLast(final,lt.getElement(lst, i))
+            promedio+=lt.getElement(lst,i)["vote_count"]
+    tamaño=lt.size(final)
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+    print("Del genero "+genres+" se obtuvieron "+tamaño+" con votacion promedio de "+round(promedio/tamaño,2)+": \n"+final)
+    
+
+def conocer_a_un_director(criteria,lista1,lista2):
+    t1_start = process_time()
+    lstpeli=[]
+    sum_vote=0
+    cant_vote=0
+    for i in range(1,lt.size(lista1)+1):
+                    valor1=lt.getElement(lista1,i)
+                    valor2=lt.getElement(lista2,i)
+                    n=valor2['director_name']
+                    if criteria==n:
+                        pelicula=valor1["original_title"]
+                        lstpeli.append(pelicula)
+                        vote=valor1["vote_average"]
+                        sum_vote+=float(vote)
+                        cant_vote+=1     
+    num_pelis=len(lstpeli)
+    prom= sum_vote/cant_vote
+    t1_stop = process_time() 
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
+    return [lstpeli,num_pelis,prom]
+
 def loadCast():
-    lst = loadCSVFile("theMoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
+    lst = loadCSVFile("themoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def loadMovies():
+    lst = loadCSVFile("themoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
+    print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
+    return lst
 def main():
     """
     Método principal del programa, se encarga de manejar todos los metodos adicionales creados
@@ -109,21 +221,57 @@ def main():
                 lstcast = loadCast()
 
             elif int(inputs[0])==2: #opcion 2
-                pass
-
+                if lstmovies==None or lt.size(lstmovies)==0:
+                    print("la lista esta vacia")
+                else:
+                    res=ranking_de_peliculas(lstmovies,rank,"vote_count","ascendente")
+                    print(res)
+                   
             elif int(inputs[0])==3: #opcion 3
-                pass
-
+                if lstmovies==None or lt.size(lstmovies)==0:
+                    print("la lista esta vacia")
+                if lstcast==None or lt.size(lstcast)==0:
+                    print("la lista esta vacia")
+                else:
+                    criteria=input("Nombre del director que desea conocer")
+                    counter=conocer_a_un_director(criteria,lstmovies,lstcast)
+                    print("Las peliculas del director ",criteria,"son ",counter[1]," las cuales se nombraran en el siguiente listado:")
+                    for k in counter[0]:
+                            print(k)
+                    print("Las anteriores tienen un promedio de votación de: ",counter[2])
             elif int(inputs[0])==4: #opcion 4
-                pass
-
+                if lstmovies==None or lt.size(lstmovies)==0:
+                    print("la lista esta vacia")
+                if lstcast==None or lt.size(lstcast)==0:
+                    print("la lista esta vacia")
+                else:
+                    f=conocer_a_un_director(criteria,lstmovies,lstcast)
             elif int(inputs[0])==3: #opcion 5
-                pass
+                if lstmovies==None or lt.size(lstmovies)==0:
+                    print("la lista de MOVIES DETAILS  esta vacia")
+                if lstcast==None or lt.size(lstcast)==0:
+                    print("la lista de MOVIES CASTING RAW esta vacia")
+                else:
+                    ges=entender_un_genero(lstmovies,"Drama")
+                    print(ges)
 
-            elif int(inputs[0])==4: #opcion 6
-                pass
-
-
+            elif int(inputs[0])==6: #opcion 6
+                if lstmovies==None or lt.size(lstmovies)==0:
+                    print("la lista de MOVIES DETAILS  esta vacia")
+                else:
+                    gen=input("¿De qué género desea hacer el ranking? ")
+                    rank=int(input("¿Cuántas peliculas quiere en el ranking? "))
+                    if rank <10:
+                        print("El numero de peliculas del ranking debe ser mayor o igual a 10" )
+                    else:
+                        doa=input("¿Desea que sea ascendente o descendente? ")
+                        ing=ranking_de_genero(lstmovies,rank,"vote_count",doa,gen)
+                        print("El top ",rank," de peliculas",ing[3]," de genero ",gen," es: ")
+                        r=1
+                        for i in ing[0]:
+                                print(r,"->",i)
+                                r+=1
+                        print("Este ranking tiene un promedio de votos de: ",ing[2]," y la calificación del ranking es: ",ing[1])
             elif int(inputs[0])==0: #opcion 0, salir
                 sys.exit(0)
                 
