@@ -25,7 +25,6 @@ from ADT import list as lt
 """
 Implementa el algoritmo de ordenamiento Quicksort
 """
-
 def partition (lst, lo, hi, lessequalfunction):
     """
     Función que va dejando el pivot en su lugar, mientras mueve elementos menores a la izquierda del pivot
