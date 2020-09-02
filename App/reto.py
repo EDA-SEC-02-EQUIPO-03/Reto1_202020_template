@@ -116,7 +116,7 @@ def ranking_de_genero(lst,rank,parameter,orden,genero):
     average=0
     count=0
     n=0
-    final=[] #list donde se almacena la lista ordenada de nombresP
+    final=lt.newList() #list donde se almacena la lista ordenada de nombresP
      #criterio de de puntuacion
     o=less #sentido de la lista
     d='WORST '
@@ -136,7 +136,7 @@ def ranking_de_genero(lst,rank,parameter,orden,genero):
                 average+= float(lt.getElement(lst,j)["vote_average"])
                 n+=1
                 count+= int(lt.getElement(lst,j)["vote_count"])
-                final.append(lt.getElement(lst,j)['original_title'])
+                lt.addLast(final,(lt.getElement(lst,j)['original_title']))
             else:
                 rank+=1
             j+=1
