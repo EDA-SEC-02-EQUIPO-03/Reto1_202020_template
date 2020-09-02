@@ -382,3 +382,12 @@ def mergesort(lst, lessfunction):
 
 def quicksort(lst, lessequalfunction):
     qk.quickSort(lst, lessequalfunction)
+
+def new_copy(lst, datastructure ="SINGLE_LINKED",cmpfunction =None):
+    copia=lt.newList(datastructure, cmpfunction)
+    
+    for i in range(1,lt.size(lst)+1):
+        a=lt.getElement(lst,i)
+        lt.addLast(copia,a)
+    return copia
+
