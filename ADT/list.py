@@ -21,7 +21,7 @@
 import config
 from Utils import error as error
 from DataStructures import liststructure as lt
-from DataStructure import listiterator as it
+from DataStructures import listiterator as it
 
 
 """
