@@ -82,7 +82,7 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-def ranking_de peliculas(lst,rank,parameter,orden):
+def ranking_de_peliculas(lst,rank,parameter,orden):
     t1_start = process_time():
     tempo=lt.newList() #list donde se almacena la lista desordenada con puntuaciones y nombres
     final=[] #list donde se almacena la lista ordenada de nombresP
@@ -121,7 +121,7 @@ def entender_un_genero(lst, genres):
     print("Del genero "+genres+" se obtuvieron "+tamaño+" con votacion promedio de "+round(promedio/tamaño,2)+": \n"+final)
     
 
-def conocer_a un_director(criteria,lista1,lista2):
+def conocer_a_un_director(criteria,lista1,lista2):
     
     t1_start = process_time()
     lstpeli=[]
