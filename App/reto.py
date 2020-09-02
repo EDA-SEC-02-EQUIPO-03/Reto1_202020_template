@@ -256,7 +256,7 @@ def main():
                     counter=conocer_a_un_director(criteria,lstmovies,lstcast)
                     print("Las peliculas del director ",criteria,"son ",counter[1]," las cuales se nombraran en el siguiente listado:")
                     for k in  range(1,lt.size(counter[0])+1):
-                            print(lt.getElement(counter[0],k)
+                            print(lt.getElement(counter[0],k))
                     print("Las anteriores tienen un promedio de votación de: ",counter[2])
             elif int(inputs[0])==4: #opcion 4
                 actor= input('Escriba el nombre del actor que quiere conocer\n')
