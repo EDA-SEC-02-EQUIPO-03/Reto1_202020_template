@@ -21,8 +21,12 @@
 import config
 from Utils import error as error
 from DataStructures import liststructure as lt
+from Sorting import insertionsort as ins
+from Sorting import selectionsort as sel
+from Sorting import shellsort as she
+from Sorting import mergesort as me
+from Sorting import quicksort as qk
 from DataStructures import listiterator as it
-
 
 """
   Este módulo implementa el tipo abstracto de datos (TAD) lista. 
@@ -364,4 +368,17 @@ def next(iterator):
     except Exception as exp:
         error.reraise (exp, 'List->next: ')
 
+def shellsort(lst, function,condition):
+    she.shellSort(lst, function,condition)
 
+def selectionsort(lst, function,condition):
+    sel.selectionSort(lst, function,condition)
+
+def insertionsort(lst, function,condition):
+    ins.insertionSort(lst, function,condition)
+
+def mergesort(lst, lessfunction):
+    me.mergesort(lst, lessfunction)
+
+def quicksort(lst, lessequalfunction):
+    qk.quickSort(lst, lessequalfunction)
