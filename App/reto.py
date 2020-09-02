@@ -32,6 +32,8 @@ import csv
 
 from ADT import list as lt
 from DataStructures import listiterator as it
+from DataStructures import liststructure as lt
+
 from time import process_time 
 
 
@@ -46,7 +48,7 @@ def printMenu():
     print("3- Conocer un director")
     print("4- Conocer un actor")
     print("5- Entender un genero")
-    print("6- Crear ranking del género")
+    print("6- Crear ranking")
     print("0- Salir")
 
 def less(element1, element2,condition):
@@ -88,13 +90,9 @@ def loadMovies ():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-<<<<<<< HEAD
-def ranking_de peliculas(lst,rank,parameter,orden):
-    t1_start = process_time():
-=======
+
 def ranking_de_peliculas(lst,rank,parameter,orden):
     t1_start = process_time()
->>>>>>> e801cbda0ebbed4535523581705aa24a2456a484
     tempo=lt.newList() #list donde se almacena la lista desordenada con puntuaciones y nombres
     final=[] #list donde se almacena la lista ordenada de nombresP
     p='vote_average' #criterio de de puntuacion
@@ -111,16 +109,11 @@ def ranking_de_peliculas(lst,rank,parameter,orden):
     #sel.selectionSort(tempo,o,p)
     she.shellSort(tempo,o,p)
     for j in range(1,rank):
-        final.append(lt.getElement(tempo,j))
+        final.append(lt.getElement(tempo,j)['original_title'])
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
-    print('Top ',rank,' ',d,'',parameter,': \n',final) #impresion final de los datos con la lista, el largo de la lista y los parametros de orden
+    return (d,final)
   
-<<<<<<< HEAD
-
-def entender_un_genero(lst, genres):
-    t1_start = process_time():
-=======
 def ranking_de_genero(lst,rank,parameter,orden,genero):
     t1_start = process_time()
     average=0
@@ -161,33 +154,25 @@ def ranking_de_genero(lst,rank,parameter,orden,genero):
     return [final,prom_vave,prom_vcount,d]
     
     
-
+#miooooooooooooooo
 def entender_un_genero(lst, genres):
     t1_start = process_time()
->>>>>>> e801cbda0ebbed4535523581705aa24a2456a484
     final=lt.newList()
     promedio=0
     tamaño=0
     for i in lt.size(lst):
-<<<<<<< HEAD
-        if lt.getElement(lst, i)["genre"] == genres:
-=======
         if lt.getElement(lst, i)["genres"] == genres:
->>>>>>> e801cbda0ebbed4535523581705aa24a2456a484
             lt.addLast(final,lt.getElement(lst, i))
             promedio+=lt.getElement(lst,i)["vote_count"]
     tamaño=lt.size(final)
     t1_stop = process_time() #tiempo final
+    promedio=round(promedio/tamaño,2)
     print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
-    print("Del genero "+genres+" se obtuvieron "+tamaño+" con votacion promedio de "+round(promedio/tamaño,2)+": \n"+final)
+    return (tamaño, promedio, final)
+    
     
 
-<<<<<<< HEAD
-def conocer_a un_director(criteria,lista1,lista2):
-    
-=======
 def conocer_a_un_director(criteria,lista1,lista2):
->>>>>>> e801cbda0ebbed4535523581705aa24a2456a484
     t1_start = process_time()
     lstpeli=[]
     sum_vote=0
@@ -209,18 +194,14 @@ def conocer_a_un_director(criteria,lista1,lista2):
     return [lstpeli,num_pelis,prom]
 
 def loadCast():
-    lst = loadCSVFile("themoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
+    lst = loadCSVFile("theMoviesdb/MoviesCastingRaw-small.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-<<<<<<< HEAD
-
-=======
 def loadMovies():
     lst = loadCSVFile("themoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
->>>>>>> e801cbda0ebbed4535523581705aa24a2456a484
 def main():
     """
     Método principal del programa, se encarga de manejar todos los metodos adicionales creados
@@ -242,21 +223,17 @@ def main():
                 lstcast = loadCast()
 
             elif int(inputs[0])==2: #opcion 2
-<<<<<<< HEAD
-                if lstmovies==None or lstmovies['size']==0:
-                    print("la lista esta vacia")
-                else:
-                    Ranking_de_peliculas(lstmovies,10,"vote_count","ascendente")
-                pass
-
-=======
                 if lstmovies==None or lt.size(lstmovies)==0:
                     print("la lista esta vacia")
                 else:
-                    res=ranking_de_peliculas(lstmovies,rank,"vote_count","ascendente")
-                    print(res)
+                    criteria=input("Ingrese el criterio por el que quiere hacer el ranking: \n *(count o average)* \n")
+                    order=input("Ingrese el ordene en el que quiere que esete el ranking ascendente o descendente: \n")
+                    rank=int(input("Ingrese la cantidad de elementos que quiere en el rank: \n"))
+                    res=ranking_de_peliculas(lstmovies,rank,criteria,order)
+                    print('Top ',rank,' ',res[0],'',criteria,': \n') #impresion final de los datos con la lista, el largo de la lista y los parametros de orden
+                    for i in range(res[1]):
+                        print(i+". "+res[1][i])
                    
->>>>>>> e801cbda0ebbed4535523581705aa24a2456a484
             elif int(inputs[0])==3: #opcion 3
                 if lstmovies==None or lt.size(lstmovies)==0:
                     print("la lista esta vacia")
@@ -276,26 +253,17 @@ def main():
                     print("la lista esta vacia")
                 else:
                     f=conocer_a_un_director(criteria,lstmovies,lstcast)
-            elif int(inputs[0])==3: #opcion 5
-<<<<<<< HEAD
+            elif int(inputs[0])==5: #opcion 5
                 if lstmovies==None or lstmovies['size']==0:
                     print("la lista esta vacia")
                 else:
-                    Entender_un_genero(lstmovies,"Drama")
+                    genres=input("Ingrese el genero que desea entender: \n")
+                    res=Entender_un_genero(lstmovies,genres)
+                    print("Del genero "+genres+" se obtuvieron "+res[0]+" con votacion promedio de "+res[1]+": \n")
+                    for i in range(res[0]):
+                        print(lt.getElement(res[3],i)["original_title"])
                 pass
 
-            elif int(inputs[0])==4: #opcion 6
-                pass
-
-=======
-                if lstmovies==None or lt.size(lstmovies)==0:
-                    print("la lista de MOVIES DETAILS  esta vacia")
-                if lstcast==None or lt.size(lstcast)==0:
-                    print("la lista de MOVIES CASTING RAW esta vacia")
-                else:
-                    ges=entender_un_genero(lstmovies,"Drama")
-                    print(ges)
->>>>>>> e801cbda0ebbed4535523581705aa24a2456a484
 
             elif int(inputs[0])==6: #opcion 6
                 if lstmovies==None or lt.size(lstmovies)==0:
