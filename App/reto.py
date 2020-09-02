@@ -148,6 +148,33 @@ def loadCast():
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def conocerActor(lst1, lst2, actor):
+    titulos=lt.newList('ARRAY_LIST')
+    prom=0
+    count=0
+    mejordirector=''
+    directores={}
+    for i in range(1,lt.size(lst1)+1):
+        pelicula_C=lt.getElement(lst2,i)
+        if pelicula_C['actor1_name']==actor or pelicula_C['actor2_name']==actor or pelicula_C['actor3_name']==actor or pelicula_C['actor4_name']==actor or pelicula_C['actor5_name']==actor:
+            pelicula=lt.getElement(lst1,i)
+            director=pelicula_C['director_name'] 
+            titulo=pelicula['title']
+            prom+=float(pelicula['vote_average'])
+            lt.addLast(titulos,titulo)
+            if director in directores:
+                directores[director]+=1
+                if directores[director]>directores[mejordirector]:
+                    mejordirector=director
+            elif mejordirector == "":
+                directores[director]=1
+                mejordirector=director
+            else:
+                directores[director]=1
+            count+=1
+    prom=prom/count
+
+    return prom,count,titulos,mejordirector
 
 def main():
     """
@@ -180,7 +207,12 @@ def main():
                 pass
 
             elif int(inputs[0])==4: #opcion 4
-                pass
+                actor= input('Escriba el nombre del actor que quiere conocer\n')
+                info= conocerActor(lstmovies,lstcast,actor)
+                print("El actor",actor,"tiene",info[1],"peliculas con un promedio de calificaciones de",info[0]," las cuales son:\b" )
+                for i in range(1,lt.size(info[2])+1):
+                    print(lt.getElement(info[2],i),"\b")
+                print("El director con quien tiene mayor cantidad de colaboraciones es ",info[3])
 
             elif int(inputs[0])==3: #opcion 5
                 if lstmovies==None or lstmovies['size']==0:
