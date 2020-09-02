@@ -225,10 +225,9 @@ def main():
     Return: None 
     """
 
-
     while True:
         printMenu() #imprimir el menu de opciones en consola
-        inputs =input('Seleccione una opción para continuar\n') #leer opción ingresada
+        inputs =input('Seleccione una opción para continuar \n') #leer opción ingresada
         if len(inputs)>0:
 
             if int(inputs[0])==1: #opcion 1
@@ -279,8 +278,6 @@ def main():
                     for i in range(0,res[0]):
                         print(str(i+1),". "+lt.getElement(res[2],i)["title"])
                 pass
-
-
             elif int(inputs[0])==6: #opcion 6
                 if lstmovies==None or lt.size(lstmovies)==0:
                     print("la lista de MOVIES DETAILS  esta vacia")
@@ -293,7 +290,7 @@ def main():
                         doa=input("¿Desea que sea ascendente o descendente?  \n")
                         v= input("Por que criteria desea ordenarlo: vote_count o vote_average: \n")
                         ing=ranking_de_genero(lstmovies,rank,v,doa,gen)
-                        print("El top ",rank," de peliculas",ing[3]," de genero ",gen," es: ")
+                        print("El top ",rank," de peliculas ",ing[3]," de genero ",gen," es: ")
                         r=1
                         for i in range(1,lt.size(ing[0])+1):
                                 print(r,".",lt.getElement(ing[0],i))
