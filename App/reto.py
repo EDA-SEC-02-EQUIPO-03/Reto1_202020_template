@@ -133,6 +133,7 @@ def conocer_a_un_director(criteria,lista1,lista2):
     return [lstpeli,num_pelis,prom]
 
 def conocerActor(lst1, lst2, actor):
+    t1_start = process_time()
     titulos=lt.newList('ARRAY_LIST')
     prom=0
     count=0
@@ -157,6 +158,8 @@ def conocerActor(lst1, lst2, actor):
                 directores[director]=1
             count+=1
     prom=round(prom/count,2)
+    t1_stop = process_time()
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
     return prom,count,titulos,mejordirector
 
 def entender_un_genero(lst, genres):
