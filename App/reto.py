@@ -112,19 +112,17 @@ def ranking_de_genero(lst,rank,parameter,orden,genero):
      #criterio de de puntuacion
     o=less #sentido de la lista
     d='WORST '
-    p='vote_average' #prefijo para el print
+     #prefijo para el print
     if orden.lower() == 'ascendente': #definir orden
         o=greater
         d='BEST'
-    if parameter.lower() == 'votos contados': #definir criterio
-        p='vote_count'   
     #lt.insertionSort(tempo,o,p)
     #lt.selectionSort(tempo,o,p)
-    lt.shellsort(lst,o,p)
+    lt.shellsort(lst,o,parameter)
     j=0
     while j<rank:
             g=lt.getElement(lst,j)['genres']
-            if g==genero:
+            if genero in g:
                 average+= float(lt.getElement(lst,j)["vote_average"])
                 n+=1
                 count+= int(lt.getElement(lst,j)["vote_count"])
@@ -134,7 +132,7 @@ def ranking_de_genero(lst,rank,parameter,orden,genero):
             j+=1
     if n!=0:
         prom_vave=round(average/n,2)
-        prom_vcount=count//n
+        prom_vcount=round(count/n,2)
     else:
         prom_vave=0
         prom_vcount=0
@@ -175,7 +173,7 @@ def conocer_a_un_director(criteria,lista1,lista2):
                         vote=valor1["vote_average"]
                         sum_vote+=float(vote)
                         cant_vote+=1     
-    num_pelis=len(lstpeli)
+    num_pelis=lt.size(lstpeli)
     prom= sum_vote/cant_vote
     t1_stop = process_time() 
     print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
@@ -276,7 +274,8 @@ def main():
                         print("El numero de peliculas del ranking debe ser mayor o igual a 10" )
                     else:
                         doa=input("¿Desea que sea ascendente o descendente? ")
-                        ing=ranking_de_genero(lstmovies,rank,"vote_count",doa,gen)
+                        v= input("Por que criteria desea ordenarlo: vote_count o vote_average: ")
+                        ing=ranking_de_genero(lstmovies,rank,v,doa,gen)
                         print("El top ",rank," de peliculas",ing[3]," de genero ",gen," es: ")
                         r=1
                         for i in range(1,lt.size(ing[0])+1):
