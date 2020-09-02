@@ -108,7 +108,7 @@ def ranking_de_genero(lst,rank,parameter,orden,genero):
     average=0
     count=0
     n=0
-    final=[] #list donde se almacena la lista ordenada de nombresP
+    final=lt.newList('ARRAY_LIST') #list donde se almacena la lista ordenada de nombresP
      #criterio de de puntuacion
     o=less #sentido de la lista
     d='WORST '
@@ -128,7 +128,7 @@ def ranking_de_genero(lst,rank,parameter,orden,genero):
                 average+= float(lt.getElement(lst,j)["vote_average"])
                 n+=1
                 count+= int(lt.getElement(lst,j)["vote_count"])
-                lt.addLast(final,(lt.getElement(lst,j)['original_title']))
+                lt.addLast(final,(lt.getElement(lst,j)['title']))
             else:
                 rank+=1
             j+=1
@@ -162,7 +162,7 @@ def entender_un_genero(lst, genres):
 def conocer_a_un_director(criteria,lista1,lista2):
 
     t1_start = process_time()
-    lstpeli=[]
+    lstpeli=lt.newList('ARRAY_LIST')
     sum_vote=0
     cant_vote=0
     for i in range(1,lt.size(lista1)+1):
@@ -170,8 +170,8 @@ def conocer_a_un_director(criteria,lista1,lista2):
                     valor2=lt.getElement(lista2,i)
                     n=valor2['director_name']
                     if criteria==n:
-                        pelicula=valor1["original_title"]
-                        lstpeli.append(pelicula)
+                        pelicula=valor1["title"]
+                        lt.addLast(lstpeli,pelicula)
                         vote=valor1["vote_average"]
                         sum_vote+=float(vote)
                         cant_vote+=1     
@@ -255,8 +255,8 @@ def main():
                     criteria=input("Nombre del director que desea conocer")
                     counter=conocer_a_un_director(criteria,lstmovies,lstcast)
                     print("Las peliculas del director ",criteria,"son ",counter[1]," las cuales se nombraran en el siguiente listado:")
-                    for k in counter[0]:
-                            print(k)
+                    for k in  range(1,lt.size(counter[0])+1):
+                            print(lt.getElement(counter[0],k)
                     print("Las anteriores tienen un promedio de votación de: ",counter[2])
             elif int(inputs[0])==4: #opcion 4
                 actor= input('Escriba el nombre del actor que quiere conocer\n')
@@ -279,8 +279,8 @@ def main():
                         ing=ranking_de_genero(lstmovies,rank,"vote_count",doa,gen)
                         print("El top ",rank," de peliculas",ing[3]," de genero ",gen," es: ")
                         r=1
-                        for i in ing[0]:
-                                print(r,"->",i)
+                        for i in range(1,lt.size(ing[0])+1):
+                                print(r,"->",lt.getElement(ing[0],i))
                                 r+=1
                         print("Este ranking tiene un promedio de votos de: ",ing[2]," y la calificación del ranking es: ",ing[1])
             elif int(inputs[0])==0: #opcion 0, salir
