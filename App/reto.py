@@ -21,7 +21,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
 """
   Este módulo es una aplicación básica con un menú de opciones para cargar datos, contar elementos, y hacer búsquedas sobre una lista .
 """
@@ -31,9 +30,7 @@ import sys
 import csv
 
 from ADT import list as lt
-from DataStructures import listiterator as it
 from time import process_time 
-
 
 
 def printMenu():
@@ -83,11 +80,6 @@ def loadCSVFile (file, cmpfunction):
     return lst
 
 
-def loadMovies ():
-    lst = loadCSVFile("theMoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
-    print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
-    return lst
-
 def ranking_de_peliculas(lst,rank,parameter,orden):
     t1_start = process_time()
     tempo=lt.newList() #list donde se almacena la lista desordenada con puntuaciones y nombres
@@ -102,9 +94,9 @@ def ranking_de_peliculas(lst,rank,parameter,orden):
         p='vote_count'
     tempo=lst.copy()
 
-    #ins.insertionSort(tempo,o,p)
-    #sel.selectionSort(tempo,o,p)
-    she.shellSort(tempo,o,p)
+    #lt.insertionSort(tempo,o,p)
+    #lt.selectionSort(tempo,o,p)
+    lt.shellsort(tempo,o,p)
     for j in range(1,rank):
         final.append(lt.getElement(tempo,j))
     t1_stop = process_time() #tiempo final
@@ -168,6 +160,7 @@ def entender_un_genero(lst, genres):
     
 
 def conocer_a_un_director(criteria,lista1,lista2):
+
     t1_start = process_time()
     lstpeli=[]
     sum_vote=0
@@ -197,6 +190,35 @@ def loadMovies():
     lst = loadCSVFile("themoviesdb/SmallMoviesDetailsCleaned.csv",compareRecordIds) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
+
+def conocerActor(lst1, lst2, actor):
+    titulos=lt.newList('ARRAY_LIST')
+    prom=0
+    count=0
+    mejordirector=''
+    directores={}
+    for i in range(1,lt.size(lst1)+1):
+        pelicula_C=lt.getElement(lst2,i)
+        if pelicula_C['actor1_name']==actor or pelicula_C['actor2_name']==actor or pelicula_C['actor3_name']==actor or pelicula_C['actor4_name']==actor or pelicula_C['actor5_name']==actor:
+            pelicula=lt.getElement(lst1,i)
+            director=pelicula_C['director_name'] 
+            titulo=pelicula['title']
+            prom+=float(pelicula['vote_average'])
+            lt.addLast(titulos,titulo)
+            if director in directores:
+                directores[director]+=1
+                if directores[director]>directores[mejordirector]:
+                    mejordirector=director
+            elif mejordirector == "":
+                directores[director]=1
+                mejordirector=director
+            else:
+                directores[director]=1
+            count+=1
+    prom=prom/count
+
+    return prom,count,titulos,mejordirector
+
 def main():
     """
     Método principal del programa, se encarga de manejar todos los metodos adicionales creados
@@ -218,12 +240,12 @@ def main():
                 lstcast = loadCast()
 
             elif int(inputs[0])==2: #opcion 2
-                if lstmovies==None or lt.size(lstmovies)==0:
+                if lstmovies==None or lstmovies['size']==0:
                     print("la lista esta vacia")
                 else:
-                    res=ranking_de_peliculas(lstmovies,rank,"vote_count","ascendente")
-                    print(res)
-                   
+                    ranking_de_peliculas(lstmovies,10,"vote_count","ascendente")
+                pass
+
             elif int(inputs[0])==3: #opcion 3
                 if lstmovies==None or lt.size(lstmovies)==0:
                     print("la lista esta vacia")
@@ -237,20 +259,12 @@ def main():
                             print(k)
                     print("Las anteriores tienen un promedio de votación de: ",counter[2])
             elif int(inputs[0])==4: #opcion 4
-                if lstmovies==None or lt.size(lstmovies)==0:
-                    print("la lista esta vacia")
-                if lstcast==None or lt.size(lstcast)==0:
-                    print("la lista esta vacia")
-                else:
-                    f=conocer_a_un_director(criteria,lstmovies,lstcast)
-            elif int(inputs[0])==3: #opcion 5
-                if lstmovies==None or lt.size(lstmovies)==0:
-                    print("la lista de MOVIES DETAILS  esta vacia")
-                if lstcast==None or lt.size(lstcast)==0:
-                    print("la lista de MOVIES CASTING RAW esta vacia")
-                else:
-                    ges=entender_un_genero(lstmovies,"Drama")
-                    print(ges)
+                actor= input('Escriba el nombre del actor que quiere conocer\n')
+                info= conocerActor(lstmovies,lstcast,actor)
+                print("El actor",actor,"tiene",info[1],"peliculas con un promedio de calificaciones de",info[0]," las cuales son:\b" )
+                for i in range(1,lt.size(info[2])+1):
+                    print(lt.getElement(info[2],i),"\b")
+                print("El director con quien tiene mayor cantidad de colaboraciones es ",info[3])
 
             elif int(inputs[0])==6: #opcion 6
                 if lstmovies==None or lt.size(lstmovies)==0:

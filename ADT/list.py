@@ -26,6 +26,8 @@ from Sorting import selectionsort as sel
 from Sorting import shellsort as she
 from Sorting import mergesort as me
 from Sorting import quicksort as qk
+from DataStructures import listiterator as it
+
 """
   Este módulo implementa el tipo abstracto de datos (TAD) lista. 
   Se puede implementar sobre una estructura de datos encadenada de forma sencilla o doble o 
@@ -344,6 +346,27 @@ def subList (lst, pos, numelem):
         return lt.subList (lst, pos, numelem)
     except Exception as exp:
         error.reraise (exp, 'List->subList: ')
+    
+def newIterator(lst):
+
+    try:
+        return it.newIterator(lst)
+    except Exception as exp:
+        error.reraise (exp, 'List->newIterator: ')
+
+def hasNext(iterator):
+
+    try:
+        return it.hasNext(iterator)
+    except Exception as exp:
+        error.reraise (exp, 'List->hasNext: ')
+
+def next(iterator):
+
+    try:
+        return it.next(iterator)
+    except Exception as exp:
+        error.reraise (exp, 'List->next: ')
 
 def shellsort(lst, function,condition):
     she.shellSort(lst, function,condition)
