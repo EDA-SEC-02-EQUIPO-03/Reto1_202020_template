@@ -21,12 +21,12 @@
 import config
 from Utils import error as error
 from DataStructures import liststructure as lt
-from Sorting import insertionsort as ins
-from Sorting import selectionsort as sel
-from Sorting import shellsort as she
-from Sorting import mergesort as me
-from Sorting import quicksort as qk
 from DataStructures import listiterator as it
+from Sorting import shellsort as she
+from Sorting import selectionsort as sel
+from Sorting import insertionsort as ins
+from Sorting import quicksort as qk
+from Sorting import mergesort as me
 
 """
   Este módulo implementa el tipo abstracto de datos (TAD) lista. 
